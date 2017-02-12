@@ -14,6 +14,10 @@
 
   <repositories>
       <repository>
+          <id>elMakers</id>
+          <url>http://maven.elmakers.com/repository/</url>
+      </repository>
+      <repository>
       <id>my-repo</id>
       <url>http://repository.james.richardson.name/releases</url>
     </repository>

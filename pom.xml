@@ -1,74 +1,98 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <artifactId>starter-kit</artifactId>
-  <version>1.3.8-SNAPSHOT</version>
-  <name>StarterKit</name>
-  <description>Plugin for the Minecraft wrapper Bukkit that provides a method for administrators to give items to new players automatically.</description>
-  <url>http://grandwazir.github.com/${project.name}/</url>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>starter-kit</artifactId>
+    <groupId>name.richardson.james.bukkit</groupId>
+    <version>2.0-SNAPSHOT</version>
+    <name>StarterKit</name>
+    <description>Plugin for the Minecraft wrapper Bukkit that provides a method for administrators to give items to new
+        players automatically.
+    </description>
+    <url>http://grandwazir.github.com/${project.name}/</url>
 
-  <parent>
-     <groupId>name.richardson.james.bukkit</groupId>
-     <artifactId>maven-parent</artifactId>
-     <version>1</version>
-  </parent>
+    <repositories>
+        <repository>
+            <id>elMakers</id>
+            <url>http://maven.elmakers.com/repository/</url>
+        </repository>
+    </repositories>
 
-  <repositories>
-      <repository>
-          <id>elMakers</id>
-          <url>http://maven.elmakers.com/repository/</url>
-      </repository>
-      <repository>
-      <id>my-repo</id>
-      <url>http://repository.james.richardson.name/releases</url>
-    </repository>
-      <repository>
-          <id>Plugin Metrics</id>
-          <url>http://repo.mcstats.org/content/repositories/public</url>
-      </repository>
-  </repositories>
+    <dependencies>
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>1.13-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.ocpsoft.prettytime</groupId>
+            <artifactId>prettytime</artifactId>
+            <version>3.2.7.Final</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
-  <dependencies>
-     <dependency>
-           <groupId>name.richardson.james.bukkit</groupId>
-           <artifactId>bukkit-utilities</artifactId>
-           <version>6.0.5</version>
-     </dependency>
-  </dependencies>
-
-  <build>
-      <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-shade-plugin</artifactId>
-             <!-- We want to bundle in BukkitUtilities -->
-            <version>1.5</version>
-            <executions>
-              <execution>
-                <phase>package</phase>
-                <goals>
-                  <goal>shade</goal>
-                </goals>
-                  <configuration>
-                      <shadedArtifactAttached>true</shadedArtifactAttached>
-                      <shadedClassifierName>shaded</shadedClassifierName>
-                      <artifactSet>
-                          <includes>
-                              <include>name.richardson.james.bukkit:bukkit-utilities</include>
-                              <include>org.mcstats.bukkit:metrics</include>
-                          </includes>
-                      </artifactSet>
-                      <relocations>
-                          <relocation>
-                              <pattern>name.richardson.james.bukkit.utilities</pattern>
-                              <shadedPattern>name.richardson.james.bukkit.starterkit.utilities</shadedPattern>
-                          </relocation>
-                      </relocations>
-                      <minimizeJar>true</minimizeJar>
-                  </configuration>
-              </execution>
-            </executions>
-          </plugin>
-      </plugins>
-  </build>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <!-- Filter and replace tokens -->
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <!-- Minecraft is still 1.5 I think -->
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <compilerVersion>1.6</compilerVersion>
+                    <source>6</source>
+                    <target>6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>1.7.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <artifactSet>
+                                <includes>
+                                    <include>org.apache.maven:maven-artifact</include>
+                                    <include>org.ocpsoft.prettytime:prettytime</include>
+                                </includes>
+                            </artifactSet>
+                            <relocations>
+                                <relocation>
+                                    <pattern>org.ocpsoft.prettytime</pattern>
+                                    <shadedPattern>name.richardson.james.bukkit.utilities.time</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.apache.maven.artifact</pattern>
+                                    <shadedPattern>name.richardson.james.bukkit.utilities.artifact</shadedPattern>
+                                </relocation>
+                            </relocations>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.7.2</version>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

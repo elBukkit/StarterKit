@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.inventory.PlayerInventory;
 
 import name.richardson.james.bukkit.starterkit.kit.ArmourKit;
@@ -33,7 +34,7 @@ public class StarterKitConfiguration extends SimplePluginConfiguration {
 	private InventoryKit inventory;
 	private ArmourKit armour;
 
-	public StarterKitConfiguration(final File file, final InputStream defaults) throws IOException {
+	public StarterKitConfiguration(final File file, final InputStream defaults) throws IOException, InvalidConfigurationException {
 		super(file, defaults);
 		this.setDefaultKit();
 		final ConfigurationSection section = this.getConfiguration().getConfigurationSection("kit");

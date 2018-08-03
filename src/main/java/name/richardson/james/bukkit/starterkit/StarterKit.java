@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -32,8 +33,6 @@ import name.richardson.james.bukkit.utilities.command.HelpCommand;
 import name.richardson.james.bukkit.utilities.command.invoker.CommandInvoker;
 import name.richardson.james.bukkit.utilities.command.invoker.FallthroughCommandInvoker;
 import name.richardson.james.bukkit.utilities.logging.PluginLoggerFactory;
-import name.richardson.james.bukkit.utilities.updater.BukkitDevPluginUpdater;
-import name.richardson.james.bukkit.utilities.updater.PluginUpdater;
 
 import name.richardson.james.bukkit.starterkit.kit.ArmourKit;
 import name.richardson.james.bukkit.starterkit.kit.InventoryKit;
@@ -67,22 +66,15 @@ public class StarterKit extends JavaPlugin {
 			this.loadConfiguration();
 			this.registerCommands();
 			this.registerListeners();
-			this.updatePlugin();
-		} catch (final IOException e) {
+		} catch (final IOException  e) {
+			e.printStackTrace();
+		} catch (final InvalidConfigurationException  e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void updatePlugin() {
-		if (!configuration.getAutomaticUpdaterState().equals(PluginUpdater.State.OFF)) {
-			PluginUpdater updater = new BukkitDevPluginUpdater(this.getDescription(), configuration.getAutomaticUpdaterBranch(), configuration.getAutomaticUpdaterState(), PROJECT_ID, this.getServer().getUpdateFolderFile(), this.getServer().getVersion());
-			this.getServer().getScheduler().runTaskAsynchronously(this, updater);
-			new name.richardson.james.bukkit.utilities.updater.PlayerNotifier(this, this.getServer().getPluginManager(), updater);
-		}
-	}
-
 	private void loadConfiguration()
-	throws IOException {
+	throws IOException, InvalidConfigurationException {
 		final File file = new File(this.getDataFolder().getAbsolutePath() + File.separatorChar + "config.yml");
 		final InputStream defaults = this.getResource("config.yml");
 		this.configuration = new StarterKitConfiguration(file, defaults);

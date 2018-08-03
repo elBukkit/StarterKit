@@ -4,6 +4,7 @@ author: grandwazir
 description: Give items to new players.
 website: https://grandwazir.github.com/StarterKit
 version: ${project.version}
+api-version: 1.13
 commands:
   sk:
     description: 'StarterKit root command'

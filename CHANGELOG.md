@@ -1,5 +1,6 @@
-# Changelog for StarterKit (v1.3.7-SNAPSHOT)
+# Changelog for StarterKit (v1.3.8-SNAPSHOT)
 
+2018-08-03 09:12:29 -0700    Remove mcstats, it's super dead. (Nathan Wolf)  
 2017-02-12 10:40:49 -0800    Add elMakers repository so we can build (nathan)  
 2013-12-15 01:57:17 -0800    prepare for release (James Richardson)  
 2013-12-14 07:05:04 -0800    add ability to give kit to specific players (James Richardson)  

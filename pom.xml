@@ -33,12 +33,6 @@
            <artifactId>bukkit-utilities</artifactId>
            <version>6.0.5</version>
      </dependency>
-      <dependency>
-          <groupId>org.mcstats.bukkit</groupId>
-          <artifactId>metrics</artifactId>
-          <version>R6</version>
-          <scope>compile</scope>
-      </dependency>
   </dependencies>
 
   <build>

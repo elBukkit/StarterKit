@@ -67,7 +67,6 @@ public class StarterKit extends JavaPlugin {
 			this.loadConfiguration();
 			this.registerCommands();
 			this.registerListeners();
-			this.setupMetrics();
 			this.updatePlugin();
 		} catch (final IOException e) {
 			e.printStackTrace();
@@ -105,13 +104,6 @@ public class StarterKit extends JavaPlugin {
 
 	protected void registerListeners() {
 		new PlayerListener(this, this.getServer().getPluginManager(), this.configuration);
-	}
-
-	protected void setupMetrics()
-	throws IOException {
-		if (this.configuration.isCollectingStats()) {
-			new MetricsListener(this, this.getServer().getPluginManager());
-		}
 	}
 
 }

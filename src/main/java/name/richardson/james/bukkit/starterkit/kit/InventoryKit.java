@@ -62,7 +62,14 @@ public class InventoryKit implements ConfigurationSerializable, Kit {
   }
 
   public InventoryKit(final PlayerInventory inventory) {
-    this.items = inventory.getContents();
+    ItemStack[] items = inventory.getContents();;
+    this.items = new ItemStack[items.length];
+    for (int i = 0; i < items.length; i++) {
+      ItemStack item = items[i];
+      if (item != null) {
+        this.items[i] = item.clone();
+      }
+    }
   }
 
   public ItemStack[] getContents() {

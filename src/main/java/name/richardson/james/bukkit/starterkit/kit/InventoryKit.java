@@ -32,10 +32,6 @@ public class InventoryKit implements ConfigurationSerializable, Kit {
 
   public static InventoryKit deserialize(final Map<String, Object> map) {
     final List<ItemStack> items = new ArrayList<ItemStack>(36);
-    // Ensure we have capacity in the list
-    for (int i = 36; --i >= 0;) {
-      items.add(null);
-    }
     for (final String key : map.keySet()) {
       try {
         // to get around the fact that the class description appears first in
@@ -43,7 +39,12 @@ public class InventoryKit implements ConfigurationSerializable, Kit {
         if (key.startsWith("==")) {
           continue;
         }
-        items.set(Integer.parseInt(key), (ItemStack) map.get(key));
+        // Ensure we have capacity in the list
+        int slot = Integer.parseInt(key);
+        while (items.size() <= slot) {
+          items.add(null);
+        }
+        items.set(slot, (ItemStack) map.get(key));
       } catch (final ClassCastException e) {
         e.printStackTrace();
       }
